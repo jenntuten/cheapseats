@@ -64,7 +64,7 @@ table {
       height: 50px;
   }
   
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 640px) {
     table {
         width: auto;
     }
@@ -87,6 +87,7 @@ table {
   }*/
   th {
       visibility: hidden;
+      height: 2px;
   }
   td {
 
@@ -116,6 +117,9 @@ table {
     content: attr(data-label);
     float: left;
   }
+  tr:nth-of-type(1) {
+    height: 2px;
+}
   td:nth-of-type(1):before {
     content: "Game: ";
     margin-right: 5px;
@@ -127,12 +131,12 @@ td:nth-of-type(2):before {
     font-weight: bold;
 }
 td:nth-of-type(3):before {
-    content: "Location: ";
+    content: "Time: ";
     margin-right: 5px;
     font-weight: bold;
 }
 td:nth-of-type(4):before {
-    content: "Venue: ";
+    content: "Location: ";
     margin-right: 5px;
     font-weight: bold;
 }

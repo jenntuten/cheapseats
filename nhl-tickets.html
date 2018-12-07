@@ -129,6 +129,7 @@
                     average: games2[q].stats.average_price.toFixed(2),
                     starting: games2[q].stats.lowest_price.toFixed(2),
                     date: moment(games2[q].datetime_local).format("dddd, LL"),
+                    time: moment(games2[q].datetime_local).format("LT"),
                     location: games2[q].venue.display_location,
                     venue: games2[q].venue.name,
                     id: [q]
@@ -146,15 +147,17 @@
                 let rows = lessThan500.map(function (s) {
                     return `<tr><td>${s.game}</td>
                                     <td>${s.date}</td>
-                                    <td>${s.location}</td>
-                                <td>${s.venue}</td>
+                                    <td>${s.time}</td>
+                                    <td>${s.venue} - ${s.location}</td>
+                                    
+                                
                                 <td>$${s.starting}</td>
                                 <td>$${s.average}</td>
                                 
                                 <td><button class="seatgeek" id = "${s.id}"><a href="${s.url}" target="_blank">Visit SeatGeek</a></button></td>
                                 </tr>`;
                 });
-                let tblHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Find Tickets</th></tr>';
+                let tblHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Find Tickets</th></tr>';
                 let makeTable = '<table> ' + tblHead + rows.join('') + ' </table>';
                 $(".table").html(makeTable);
                 $('.seatgeek').on('click', function () {

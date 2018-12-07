@@ -85,19 +85,19 @@
         }).then(data2 => {
             console.log('data2.events', data2.events)
             let gameFilter2 = data2.events;
-            let filteredgames22;
+            let filteredgames;
             let games2 = []
             for (let r = 0; r < gameFilter2.length; r++) {
                 console.log('gameFilter2[r]', gameFilter2[r]);
-                filteredgames22 = gameFilter2[r]
-                console.log('filtered inside loop', filteredgames22)
-                Object.keys(filteredgames22).forEach(function (key) {
-                    if (filteredgames22.stats.average_price === null || filteredgames22.stats.lowest_price === null) {
-                        filteredgames22.stats.average_price = 0;
-                        filteredgames22.stats.lowest_price = 0;
+                filteredgames = gameFilter2[r]
+                console.log('filtered inside loop', filteredgames)
+                Object.keys(filteredgames).forEach(function (key) {
+                    if (filteredgames.stats.average_price === null || filteredgames.stats.lowest_price === null) {
+                        filteredgames.stats.average_price = 0;
+                        filteredgames.stats.lowest_price = 0;
                     }
                 })
-                games2.push(filteredgames22)
+                games2.push(filteredgames)
             }
             console.log('GAME FILTER:', games2);
 
@@ -117,6 +117,7 @@
                     average: games2[q].stats.average_price.toFixed(2),
                     starting: games2[q].stats.lowest_price.toFixed(2),
                     date: moment(games2[q].datetime_local).format("dddd, LL"),
+                    time: moment(games2[q].datetime_local).format("LT"),
                     location: games2[q].venue.display_location,
                     venue: games2[q].venue.name,
                     id: [q]
@@ -134,15 +135,17 @@
                 let rows = lessThan500.map(function (s) {
                     return `<tr><td>${s.game}</td>
                                     <td>${s.date}</td>
-                                    <td>${s.location}</td>
-                                <td>${s.venue}</td>
+                                    <td>${s.time}</td>
+                                    <td>${s.venue} - ${s.location}</td>
+                                    
+                                
                                 <td>$${s.starting}</td>
                                 <td>$${s.average}</td>
                                 
                                 <td><button class="seatgeek" id = "${s.id}"><a href="${s.url}" target="_blank">Visit SeatGeek</a></button></td>
                                 </tr>`;
                 });
-                let tblHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Find Tickets</th></tr>';
+                let tblHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Find Tickets</th></tr>';
                 let makeTable = '<table> ' + tblHead + rows.join('') + ' </table>';
                 $(".table").html(makeTable);
                 $('.seatgeek').on('click', function () {
@@ -559,6 +562,7 @@
                         average: games[i].stats.average_price.toFixed(2),
                         starting: games[i].stats.lowest_price.toFixed(2),
                         date: moment(games[i].datetime_local).format("dddd, LL"),
+                        time: moment(games[i].datetime_local).format("LT"),
                         location: games[i].venue.display_location,
                         venue: games[i].venue.name,
                         id: [i]
@@ -576,15 +580,16 @@
                     let rowItems = lessThan.map(function (p) {
                         return `<tr><td>${p.game}</td>
                                     <td>${p.date}</td>
-                                    <td>${p.location}</td>
-                                <td>${p.venue}</td>
+                                    <td>${p.time}</td>
+                                    <td>${p.venue} - ${p.location}</td>
+                                
                                 <td>$${p.starting}</td>
                                 <td>$${p.average}</td>
                                 <td>${p.distance} miles</td>
                                 <td><button class="seatgeek" id = "${p.id}"><a href="${p.url}" target="_blank">Visit SeatGeek</a></button></td>
                                 </tr>`;
                     });
-                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Find Tickets</th></tr>';
+                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Find Tickets</th></tr>';
                     let createTable = '<table> ' + tableHead + rowItems.join('') + ' </table>';
                     $(".table").html(createTable);
                     $('.seatgeek').on('click', function () {

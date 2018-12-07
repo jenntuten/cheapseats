@@ -64,7 +64,7 @@ table {
       height: 50px;
   }
   
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 640px) {
     table {
         width: auto;
     }
@@ -72,7 +72,7 @@ table {
         table-layout: fixed;
         width: 100%
       }
-    /*
+    
     
   table thead {
     border: none !important;
@@ -84,9 +84,12 @@ table {
     position: absolute;
     width: 1px;
     visibility: hidden;
-  }*/
+  }
   th {
       visibility: hidden;
+  }
+  tr:nth-of-type(1) {
+      height: 2px;
   }
   td {
 
@@ -127,12 +130,12 @@ td:nth-of-type(2):before {
     font-weight: bold;
 }
 td:nth-of-type(3):before {
-    content: "Location: ";
+    content: "Time: ";
     margin-right: 5px;
     font-weight: bold;
 }
 td:nth-of-type(4):before {
-    content: "Venue: ";
+    content: "Location: ";
     margin-right: 5px;
     font-weight: bold;
 }
