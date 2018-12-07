@@ -1,0 +1,159 @@
+#jumbotron {
+    /*height: 274px;*/
+    width: 90%;
+  text-align: center;
+  margin: 0 auto;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+body {
+    background-color: #000;
+}
+#first-prop {
+    background: #707571;
+}
+.card {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    
+    width: 90%;
+    margin: 0 auto;
+    
+  }
+  .dateSelector {
+      margin: 8px;
+  }
+  .submit {
+      margin: 8px;
+  }
+  .empty {
+      height: 10px;
+  }
+  /*.table {
+      text-transform: capitalize;
+  }*/
+  .card-header {
+    background: #B8C4CA;
+    color: black;
+  }
+  .carousel {
+      width: 40%;
+      margin: 0 auto;
+  }
+table {
+    width: 100%;
+}
+  .nav {
+      width: 100%;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+  .container {
+      width: 90%;
+  }
+  #find {
+    padding: 10px;
+  }
+
+  a, a:visited, a:hover, a:focus {
+      color: black;
+      text-emphasis: none !important;
+      text-decoration: none !important;
+  }
+  .userTemp {
+      height: 50px;
+  }
+  
+  @media screen and (max-width: 600px) {
+    table {
+        width: auto;
+    }
+    table { 
+        table-layout: fixed;
+        width: 100%
+      }
+    /*
+    
+  table thead {
+    border: none !important;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    visibility: hidden;
+  }*/
+  th {
+      visibility: hidden;
+  }
+  td {
+
+    /* css-3 */
+    white-space: -o-pre-wrap; 
+    word-wrap: break-word;
+    white-space: pre-wrap; 
+    white-space: -moz-pre-wrap; 
+    white-space: -pre-wrap; 
+
+}
+  table tr {
+    /*border-bottom: 3px solid #ddd;*/
+    border: none !important;
+    display: block;
+  }
+  
+  table td {
+    /*border-bottom: 1px solid #ddd;*/
+    border: none !important;
+    display: block;
+    text-align: left;
+    width: fit-content;
+  }
+  
+  table td::before {
+    content: attr(data-label);
+    float: left;
+  }
+  td:nth-of-type(1):before {
+    content: "Game: ";
+    margin-right: 5px;
+    font-weight: bold;
+}
+td:nth-of-type(2):before {
+    content: "Date: ";
+    margin-right: 5px;
+    font-weight: bold;
+}
+td:nth-of-type(3):before {
+    content: "Location: ";
+    margin-right: 5px;
+    font-weight: bold;
+}
+td:nth-of-type(4):before {
+    content: "Venue: ";
+    margin-right: 5px;
+    font-weight: bold;
+}
+td:nth-of-type(5):before {
+    content: "Starting Ticket Price: ";
+    margin-right: 5px;
+    font-weight: bold;
+}
+td:nth-of-type(6):before {
+    content: "Average Ticket Price: ";
+    font-weight: bold;
+    margin-right: 5px;
+}
+.distance {
+    content: "Distance: ";
+    font-weight: bold;
+    margin-right: 5px;
+}
+td:after {
+    border-bottom: 3px solid #ddd;
+}
+}
+  
+ 
