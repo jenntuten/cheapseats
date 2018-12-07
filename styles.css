@@ -67,7 +67,13 @@ table {
   @media screen and (max-width: 600px) {
     table {
         width: auto;
-    }/*
+    }
+    table { 
+        table-layout: fixed;
+        width: 100%
+      }
+    /*
+    
   table thead {
     border: none !important;
     clip: rect(0 0 0 0);
@@ -82,7 +88,16 @@ table {
   th {
       visibility: hidden;
   }
-  
+  td {
+
+    /* css-3 */
+    white-space: -o-pre-wrap; 
+    word-wrap: break-word;
+    white-space: pre-wrap; 
+    white-space: -moz-pre-wrap; 
+    white-space: -pre-wrap; 
+
+}
   table tr {
     /*border-bottom: 3px solid #ddd;*/
     border: none !important;
@@ -93,7 +108,7 @@ table {
     /*border-bottom: 1px solid #ddd;*/
     border: none !important;
     display: block;
-    text-align: right;
+    text-align: left;
     width: fit-content;
   }
   
