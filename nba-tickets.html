@@ -190,7 +190,10 @@
                 <option value='utah-jazz'>Utah Jazz</option>
                 <option value='washington-wizards'>Washington Wizards</option>
                 </select>`)
-
+                $( window ).resize(function() {
+  if($(window).width() <=6000) $('.td').addClass("p");
+  else $('.td').removeClass("p");
+});
 
         let theGames;
 

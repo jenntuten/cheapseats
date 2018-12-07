@@ -116,7 +116,6 @@ table {
     content: attr(data-label);
     float: left;
   }
-}
   td:nth-of-type(1):before {
     content: "Game: ";
     margin-right: 5px;
@@ -155,4 +154,6 @@ td:nth-of-type(6):before {
 td:after {
     border-bottom: 3px solid #ddd;
 }
+}
+  
  
