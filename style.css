@@ -1,0 +1,136 @@
+#jumbotron {
+    /*height: 274px;*/
+    width: 90%;
+  text-align: center;
+  margin: 0 auto;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+body {
+    background-color: #17408b;
+}
+#first-prop {
+    background: #707571;
+}
+.card {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    
+    width: 90%;
+    margin: 0 auto;
+    
+  }
+  .dateSelector {
+      margin: 8px;
+  }
+  .submit {
+      margin: 8px;
+  }
+  .empty {
+      height: 10px;
+  }
+  .table {
+      text-transform: capitalize;
+  }
+  .card-header {
+    background: #c9082a;
+    color: white;
+  }
+  .carousel {
+      width: 40%;
+      margin: 0 auto;
+  }
+table {
+    width: 100%;
+}
+  .nav {
+      width: 100%;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+  .container {
+      width: 90%;
+  }
+  #find {
+    padding: 10px;
+  }
+
+  a, a:visited, a:hover, a:focus {
+      color: black;
+      text-emphasis: none !important;
+      text-decoration: none !important;
+  }
+  .userTemp {
+      height: 50px;
+  }
+  
+  @media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+
+    /* Force table to not be like tables anymore */
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc;
+    }
+    tr:nth-of-type(odd) {
+        background: #eee;
+        
+    }
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        padding: 10px;
+    }
+
+    td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: -6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        
+    }
+    /*
+Label the data
+*/
+    td:nth-of-type(1):before {
+        content: "Location";
+        font-weight: bold;
+    }
+    td:nth-of-type(2):before {
+        content: "Current Temperature";
+        font-weight: bold;
+    }
+    td:nth-of-type(3):before {
+        content: "Temperature Difference";
+        font-weight: bold;
+    }
+    td:nth-of-type(4):before {
+        content: "Conditions";
+        font-weight: bold;
+    }
+    td:nth-of-type(5):before {
+        content: "Expedia Link";
+        font-weight: bold;
+    }
+}
