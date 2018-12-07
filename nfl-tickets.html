@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
+    <title>Cheap Seats</title>
+</head>
+
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Cheap Seats</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        
+                        <a class="nav-item nav-link" href="nba-tickets.html">NBA Tickets</a>
+                        <a class="nav-item nav-link active" href="#">NFL Tickets<span class="sr-only">(current)</span></a>
+                    </div>
+                </div>
+            </nav>
+    <div class="card">
+        <div class="card-header">
+            Cheap Seats
+        </div>
+        <div class="card-body">
+            <p>Choose an NFL team to view upcoming games within a 500-mile radius of the team's home arena. Results will be
+                sorted in order of starting price.</p>
+            <div class="teamOptions"></div>
+            <button class="submit">Submit</button>
+            <button class="reset">Reset</button>
+        </div>
+    </div>
+    </div>
+    <div class='empty'></div>
+    <div class="card">
+        <div class="card-header">
+            Upcoming <span class="teamName"></span> Games
+            
+        </div>
+
+        <div class="card-body">
+            <div class="table"></div>
+            <div class="output"></div>
+        </div>
+    </div>
+    </div>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+
+    <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+        $('.teamName').html(`NFL`)
+
+        let nflUrl = "https://api.seatgeek.com/2/events?taxonomies.name=nfl&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
+
+        let nflArray = [];
+        $.ajax({
+            url: nflUrl,
+            method: "GET"
+        }).then(data2 => {
+            console.log('data2.events', data2.events)
+            let gameFilter2 = data2.events;
+            let filteredgames22;
+            let games2 = []
+            for (let r = 0; r < gameFilter2.length; r++) {
+                console.log('gameFilter2[r]', gameFilter2[r]);
+                filteredgames22 = gameFilter2[r]
+                console.log('filtered inside loop', filteredgames22)
+                Object.keys(filteredgames22).forEach(function (key) {
+                    if (filteredgames22.stats.average_price === null || filteredgames22.stats.lowest_price === null) {
+                        filteredgames22.stats.average_price = 0;
+                        filteredgames22.stats.lowest_price = 0;
+                    }
+                })
+                games2.push(filteredgames22)
+            }
+            console.log('GAME FILTER:', games2);
+
+            for (let q = 0; q < games2.length; q++) {
+
+                console.log("Matchup: ", games2[q].title)
+                console.log("Location: ", games2[q].venue.display_location + " - ", games2[q].venue.name)
+                console.log("Date and Time: ", moment(games2[q].datetime_local).format("dddd, LL"))
+                console.log("Average Ticket Price: $" + games2[q].stats.average_price.toFixed(2))
+
+                //Calculate distance using Geodata2Source code.
+
+                nflArray.push({
+                    game: games2[q].title,
+                    url: games2[q].url,
+                    //distance: parseInt(dist),
+                    average: games2[q].stats.average_price.toFixed(2),
+                    starting: games2[q].stats.lowest_price.toFixed(2),
+                    date: moment(games2[q].datetime_local).format("dddd, LL"),
+                    location: games2[q].venue.display_location,
+                    venue: games2[q].venue.name,
+                    id: [q]
+                })//Push to array
+                console.log('new array:', nflArray)
+
+                var lessThan500 = nflArray.filter(obj => {
+                    return obj.starting > 1 && obj.average > 1;
+                })
+                console.log('lessThan500', lessThan500)
+                lessThan500.sort(function (a, b) {
+                    return parseFloat(a.starting) - parseFloat(b.starting);
+                });
+
+                let rows = lessThan500.map(function (s) {
+                    return `<tr><td>${s.game}</td>
+                                    <td>${s.date}</td>
+                                    <td>${s.location}</td>
+                                <td>${s.venue}</td>
+                                <td>$${s.starting}</td>
+                                <td>$${s.average}</td>
+                                
+                                <td><button class="seatgeek" id = "${s.id}"><a href="${s.url}" target="_blank">Visit SeatGeek</a></button></td>
+                                </tr>`;
+                });
+                let tblHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Find Tickets</th></tr>';
+                let makeTable = '<table> ' + tblHead + rows.join('') + ' </table>';
+                $(".table").html(makeTable);
+                $('.seatgeek').on('click', function () {
+                    console.log('SeatGeek clicked: ', this.id);
+
+                    let chosen1 = this.id;
+
+                    console.log('chosen1: ', lessThan500[chosen1].url)
+
+                    function newTab() {
+                        target = "_blank";
+                        href = lessThan500[chosen1].url;
+                        console.log('href', href)
+                    }
+
+                    // And then
+                    newTab(`${lessThan500[chosen1].url}`);
+                })
+                $('.output').append(``);
+
+            }//For loop(i)
+        })//data2 success
+        $('.teamOptions').append(`<select class='teamSelector' name='ChooseTeam'>
+                <option value='selection'>Select your team</option>
+                <option value='arizona-cardinals'>Arizona Cardinals</option>
+                <option value='atlanta-falcons'>Atlanta Falcons</option>
+                <option value='baltimore-ravens'>Baltimore Ravens</option>
+                <option value='buffalo-bills'>Buffalo Bills</option>
+                <option value='carolina-panthers'>Carolina Panthers</option>
+                <option value='chicago-bears'>Chicago Bears</option>
+                <option value='cincinnati-bengals'>Cincinnati Bengals</option>
+                <option value='cleveland-browns'>Cleveland Browns</option>
+                <option value='dallas-cowboys'>Dallas Cowboys</option>
+                <option value='denver-broncos'>Denver Broncos</option>
+                <option value='detroit-lions'>Detroit Lions</option>
+                <option value='green-bay-packers'>Green Bay Packers</option>
+                <option value='houston-texans'>Houston Texans</option>
+                <option value='indianapolis-colts'>Indianapolis Colts</option>
+                <option value='jacksonville-jaguars'>Jacksonville Jaguars</option>
+                <option value='kansas-city-chiefs'>Kansas City Chiefs</option>
+                <option value='los-angeles-chargers'>Los Angeles Chargers</option>
+                <option value='los-angeles-rams'>Los Angeles Rams</option>
+                <option value='miami-dolphins'>Miami Dolphins</option>
+                <option value='minnesota-vikings'>Minnesota Vikings</option>
+                <option value='new-england-patriots'>New England Patriots</option>
+                <option value='new-orleans-saints'>New Orleans Saints</option>
+                <option value='new-york-giants'>New York Giants</option>
+                <option value='new-york-jets'>New York Jets</option>
+                <option value='oakland-raiders'>Oakland Raiders</option>
+                <option value='philadelphia-eagles'>Philadelphia Eagles</option>
+                <option value='pittsburgh-steelers'>Pittsburgh Steelers</option>
+                <option value='san-francisco-49ers'>San Francisco 49ers</option>
+                <option value='seattle-seahawks'>Seattle Seahawks</option>
+                <option value='tampa-bay-buccaneers'>Tampa Bay Buccaneers</option>
+                <option value='tennessee-titans'>Tennessee Titans</option>
+                <option value='washington-redskins'>Washington Redskins</option>
+                </select>`)
+
+
+        let theGames;
+
+        //Get user team's coordinates for distance function.
+        let teamName;
+        let firstLatitude;
+        let firstLongitude;
+        let userLat;
+        let userLon;
+        let n = null;
+
+
+
+        $('.submit').on('click', function () {
+
+            let userTeam = $('.teamSelector').val();
+            let arenaCoordinates = userTeam;
+
+            //Get each team arena's coordinates.
+            switch (arenaCoordinates) {
+                case 'arizona-cardinals':
+                    teamName = "Arizona Cardinals",
+                        firstLatitude = 33.5294,
+                        firstLongitude = -112.262,
+                        $('body').css('background', "#97233F"),
+                        $('.card-header').css('background', '#000'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                case 'atlanta-falcons':
+                    teamName = "Atlanta Falcons",
+                        firstLatitude = 33.7547,
+                        firstLongitude = -84.404,
+                        $('body').css('background', "#A71930"),
+                        $('.card-header').css('background', '#000')
+                    $('.card-header').css('color', '#fff')
+                    break;
+                case 'baltimore-ravens':
+                    teamName = "Baltimore Ravens",
+                        firstLatitude = 39.2774,
+                        firstLongitude = -76.623,
+                        $('body').css('background', "#241773"),
+                        $('.card-header').css('background', '#000000'),
+                        $('.card-header').css('color', '#ffffff')
+                    break;
+                case 'buffalo-bills':
+                    teamName = "Buffalo Bills",
+                        firstLatitude = 42.7737,
+                        firstLongitude = -78.7874,
+
+                        $('body').css('background', "#00338D"),
+                        $('.card-header').css('background', '#C60C30'),
+                        $('.card-header').css('color', '#ffffff')
+                    break;
+                case 'carolina-panthers':
+                    teamName = "Carolina Panthers",
+                        firstLatitude = 35.2243,
+                        firstLongitude = -80.8524,
+                        $('body').css('background', "#0085CA"),
+                        $('.card-header').css('background', '#000'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'chicago-bears':
+                    teamName = "Chicago Bears",
+                        firstLatitude = 41.8623,
+                        firstLongitude = -87.6159
+                        $('body').css('background', "#0B162A"),
+                        $('.card-header').css('background', '#C83803'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'cincinnati-bengals':
+                    teamName = "Cincinnati Bengals",
+                        firstLatitude = 39.0961,
+                        firstLongitude = -84.5177
+                        $('body').css('background', "#FB4F14"),
+                        $('.card-header').css('background', '#000'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                
+                    case 'cleveland-browns':
+                    teamName = "Cleveland Browns",
+                        firstLatitude = 41.5065,
+                        firstLongitude = -81.7,
+                        $('body').css('background', "#311D00"),
+                        $('.card-header').css('background', '#FF3C00'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                
+                    case 'dallas-cowboys':
+                    teamName = "Dallas Cowboys",
+                        firstLatitude = 32.7459,
+                        firstLongitude = -97.0957,
+                        $('body').css('background', "#041E42"),
+                        $('.card-header').css('background', '#869397'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                
+                    case 'denver-broncos':
+                    teamName = "Denver Broncos",
+                        firstLatitude = 39.74,
+                        firstLongitude = -105.02,
+                        $('body').css('background', "#FB4F14"),
+                        $('.card-header').css('background', '#002244'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                
+                    case 'detroit-lions':
+                    teamName = "Detroit Lions",
+                        firstLatitude = 42.34,
+                        firstLongitude = -83.0459,
+                        $('body').css('background', "#0076B6"),
+                        $('.card-header').css('background', '#B0B7BC'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                
+                    case 'green-bay-packers':
+                    teamName = "Green Bay Packers",
+                        firstLatitude = 44.5013,
+                        firstLongitude = -88.0622,
+                        $('body').css('background', "#203731"),
+                        $('.card-header').css('background', '#FFB612'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                    case 'houston-texans':
+                    teamName = "Houston Texans",
+                        firstLatitude = 29.6847,
+                        firstLongitude = -95.4107,
+                        $('body').css('background', "#03202F"),
+                        $('.card-header').css('background', '#A71930'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'indianapolis-colts':
+                    teamName = "Indianapolis Colts",
+                        firstLatitude = 39.7601,
+                        firstLongitude = -86.1639,
+                        $('body').css('background', "#002C5F"),
+                        $('.card-header').css('background', '#A2AAAD'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                    case 'jacksonville-jaguars':
+                    teamName = "Jacksonville Jaguars",
+                        firstLatitude = 30.32,
+                        firstLongitude = -81.64,
+                        $('body').css('background', "#006778"),
+                        $('.card-header').css('background', '#9F792C'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'kansas-city-chiefs':
+                    teamName = "Kansas City Chiefs",
+                        firstLatitude = 39.0489,
+                        firstLongitude = -94.4839,
+                        $('body').css('background', "#E31837"),
+                        $('.card-header').css('background', '#FFB81C'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                    case 'los-angeles-chargers':
+                    teamName = "Los Angeles Chargers",
+                        firstLatitude = 34.0138,
+                        firstLongitude = -118.288,
+                        $('body').css('background', "#002A5E"),
+                        $('.card-header').css('background', '#FFC20E'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                    case 'los-angeles-rams':
+                    teamName = "Los Angeles Rams",
+                        firstLatitude = 33.8643,
+                        firstLongitude = -118.261,
+                        $('body').css('background', "#002244"),
+                        $('.card-header').css('background', '#866D4B'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'minnesota-vikings':
+                    teamName = "Minnesota Vikings",
+                        firstLatitude = 44.9751,
+                        firstLongitude = -93.2582,
+                        $('body').css('background', "#4F2683"),
+                        $('.card-header').css('background', '#FFC62F'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                    case 'miami-dolphins':
+                    teamName = "Miami Dolphins",
+                        firstLatitude = 25.9579,
+                        firstLongitude = -80.2388,
+                        $('body').css('background', "#008E97"),
+                        $('.card-header').css('background', '#F26A24'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'new-england-patriots':
+                    teamName = "New England Patriots",
+                        firstLatitude = 42.0906,
+                        firstLongitude = -71.2674,
+                        $('body').css('background', "#002244"),
+                        $('.card-header').css('background', '#C60C30'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'new-orleans-saints':
+                    teamName = "New Orleans Saints",
+                        firstLatitude = 29.9515,
+                        firstLongitude = -90.0786,
+                        $('body').css('background', "#D3BC8D"),
+                        $('.card-header').css('background', '#101820'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'new-york-giants':
+                    teamName = "New York Giants",
+                        firstLatitude = 40.8142,
+                        firstLongitude = -74.0737,
+                        $('body').css('background', "#0B2265"),
+                        $('.card-header').css('background', '#A71930'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'new-york-jets':
+                    teamName = "New York Jets",
+                        firstLatitude = 40.8142,
+                        firstLongitude = -74.0737,
+                        $('body').css('background', "#003F2D"),
+                        $('.card-header').css('background', '#fff'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                    case 'oakland-raiders':
+                    teamName = "Oakland Raiders",
+                        firstLatitude = 37.7469,
+                        firstLongitude = -122.201,
+                        $('body').css('background', "#000"),
+                        $('.card-header').css('background', '#A5ACAF'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                    case 'philadelphia-eagles':
+                    teamName = "Philadelphia Eagles",
+                        firstLatitude = 39.9046,
+                        firstLongitude = -75.1675,
+                        $('body').css('background', "#004C54"),
+                        $('.card-header').css('background', '#A5ACAF'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                    case 'pittsburgh-steelers':
+                    teamName = "Pittsburgh Steelers",
+                        firstLatitude = 40.4468,
+                        firstLongitude = -80.0158,
+                        $('body').css('background', "#000"),
+                        $('.card-header').css('background', '#FFB612'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'san-francisco-49ers':
+                    teamName = "San Francisco 49ers",
+                        firstLatitude = 37.4023,
+                        firstLongitude = -121.969,
+                        $('body').css('background', "#AA0000"),
+                        $('.card-header').css('background', '#B3995D'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'seattle-seahawks':
+                    teamName = "Seattle Seahawks",
+                        firstLatitude = 47.5948,
+                        firstLongitude = -122.332,
+                        $('body').css('background', "#002244"),
+                        $('.card-header').css('background', '#69BE28'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'tampa-bay-buccaneers':
+                    teamName = "Tampa Bay Buccaneers",
+                        firstLatitude = 27.9753,
+                        firstLongitude = -82.5034,
+                        $('body').css('background', "#D50A0A"),
+                        $('.card-header').css('background', '#FF7900'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'tennessee-titans':
+                    teamName = "Tennessee Titans",
+                        firstLatitude = 36.1665,
+                        firstLongitude = -86.7713,
+                        $('body').css('background', "#002A5C"),
+                        $('.card-header').css('background', '#4495D1'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                    case 'washington-redskins':
+                    teamName = "Washington Redskins",
+                        firstLatitude = 38.9071,
+                        firstLongitude = -76.8658,
+                        $('body').css('background', "#773141"),
+                        $('.card-header').css('background', '#FFB612'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                default:
+                    console.log('Sorry, ' + arenaCoordinates + 'is not valid.');
+            }
+
+            //Change slug to user team.
+            let teamUrl = "https://api.seatgeek.com/2/events?performers.slug=" + userTeam + "&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
+            console.log(teamUrl);
+            let newArray = [];
+            $.ajax({
+                url: teamUrl,
+                method: "GET"
+            }).then(data => {
+                console.log('data.events', data.events)
+                let gameFilter = data.events;
+                let filteredGames;
+                let games = []
+                for (let r = 0; r < gameFilter.length; r++) {
+                    console.log('gameFilter[r]', gameFilter[r]);
+                    filteredGames = gameFilter[r]
+                    console.log('filtered inside loop', filteredGames)
+                    Object.keys(filteredGames).forEach(function (key) {
+                        if (filteredGames.stats.average_price === null || filteredGames.stats.lowest_price === null) {
+                            filteredGames.stats.average_price = 0;
+                            filteredGames.stats.lowest_price = 0;
+                        }
+                    })
+                    games.push(filteredGames)
+                }
+                console.log('GAME FILTER:', games);
+
+                for (let i = 0; i < games.length; i++) {
+
+                    console.log("Matchup: ", games[i].title)
+                    console.log("Location: ", games[i].venue.display_location + " - ", games[i].venue.name)
+                    console.log("Date and Time: ", moment(games[i].datetime_local).format("dddd, LL"))
+                    console.log("Average Ticket Price: $" + games[i].stats.average_price.toFixed(2))
+
+                    //Calculate distance using GeoDataSource code.
+
+                    let secondLatitude = games[i].venue.location.lat;
+                    console.log('2ndlat', secondLatitude)
+                    let secondLongitude = games[i].venue.location.lon;
+                    var dist = distance(firstLatitude, firstLongitude, secondLatitude, secondLongitude, 'M');
+
+                    function distance(lat1, lon1, lat2, lon2, unit) {
+                        if ((lat1 == lat2) && (lon1 == lon2)) {
+                            return 0;
+                        }
+                        else {
+                            var radlat1 = Math.PI * lat1 / 180;
+                            var radlat2 = Math.PI * lat2 / 180;
+                            var theta = lon1 - lon2;
+                            var radtheta = Math.PI * theta / 180;
+                            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+                            if (dist > 1) {
+                                dist = 1;
+                            }
+                            dist = Math.acos(dist);
+                            dist = dist * 180 / Math.PI;
+                            dist = dist * 60 * 1.1515;
+                            if (unit == "K") { dist = dist * 1.609344 }
+                            if (unit == "N") { dist = dist * 0.8684 }
+                            return dist;
+                        }//Else statement
+                    }//Distance function
+                    console.log(dist);
+
+                    let dateTime = moment(games[i].datetime_local).format("dddd, LL");
+
+                    newArray.push({
+                        game: games[i].title,
+                        url: games[i].url,
+                        distance: parseInt(dist),
+                        average: games[i].stats.average_price.toFixed(2),
+                        starting: games[i].stats.lowest_price.toFixed(2),
+                        date: moment(games[i].datetime_local).format("dddd, LL"),
+                        location: games[i].venue.display_location,
+                        venue: games[i].venue.name,
+                        id: [i]
+                    })//Push to array
+                    console.log('new array:', newArray)
+
+                    var lessThan = newArray.filter(obj => {
+                        return obj.distance < 500 && obj.starting > 1 && obj.average > 1;
+                    })
+
+                    lessThan.sort(function (a, b) {
+                        return parseFloat(a.starting) - parseFloat(b.starting);
+                    });
+
+                    let rowItems = lessThan.map(function (p) {
+                        return `<tr><td>${p.game}</td>
+                                    <td>${p.date}</td>
+                                    <td>${p.location}</td>
+                                <td>${p.venue}</td>
+                                <td>$${p.starting}</td>
+                                <td>$${p.average}</td>
+                                <td>${p.distance}</td>
+                                <td><button class="seatgeek" id = "${p.id}"><a href="${p.url}" target="_blank">Visit SeatGeek</a></button></td>
+                                </tr>`;
+                    });
+                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance (in miles)</th><th>Find Tickets</th></tr>';
+                    let createTable = '<table> ' + tableHead + rowItems.join('') + ' </table>';
+                    $(".table").html(createTable);
+                    $('.seatgeek').on('click', function () {
+                        console.log('SeatGeek clicked: ', this.id);
+
+                        let chosen = this.id;
+
+                        console.log('CHOSEN: ', lessThan[chosen].url)
+
+                        function openInNewTab() {
+                            target = "_blank";
+                            href = lessThan[chosen].url;
+                            console.log('href', href)
+                        }
+
+                        // And then
+                        openInNewTab(`${lessThan[chosen].url}`);
+                    })
+                    $('.output').append(``);
+
+                }//For loop(i)
+            })//Data success
+            if (teamName != undefined) {
+                $('.teamName').html(`${teamName}`)
+            }
+
+        })//Submit function
+
+        $(".reset").on('click', function () {
+            $('body').css('background', '#17408b'),
+                $('.card-header').css('background', '#c9082a')
+            $(".table").html("")
+            $('.teamName').html("")
+        })
+
+    </script>
+</body>
+
+</html>

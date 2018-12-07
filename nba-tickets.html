@@ -14,68 +14,48 @@
 </head>
 
 <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Cheap Seats</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                        
-                        <a class="nav-item nav-link" href="nba-tickets.html">NBA Tickets</a>
-                        <a class="nav-item nav-link" href="nfl-tickets.html">NFL Tickets</a>
-                    </div>
+    <!--<input class="input" />-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Cheap Seats</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="index.html">Home </a>
+                    
+                    <a class="nav-item nav-link active" href="#">NBA Tickets<span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="nfl-tickets.html">NFL Tickets</a>
                 </div>
-            </nav>
-            <div class="jumbotron jumbotron-fluid" id="jumbotron">
-                    <div class="container headDisplay">
-                        <div class="row" id="jumbotron-1">
-                            <div class="col-sm" id="main">
-                                <h1 class="display-4">Cheap Seats</h1>
-                                <div class="col-sm">
-                                    <p>Find the best place to watch your favorite team</p>
-                                    
-                                    <div class="userTemp"></div>
-                                    <!--<p>Hate the cold? Check out the <a href="escaping-winter.html">Escape Winter</a> page.</p>-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+        </nav>
     <div class="card">
         <div class="card-header">
-            About the app
+            Cheap Seats
         </div>
         <div class="card-body">
-            <p>The app is designed to show where a game close enough to drive to can save money in some cases, especially as a group of attendees increases.</p>
-
-                    <p> In other words, if it's close enough to drive and stay overnight, then it's worth considering attending the out-of-town game. As more people are factored in, each person can split the cost of gas and lodging.</p>
-                    
-                            <p>For example: four friends are interested in attending a Saints game. The starting price is $68, multiplied by 4, for a total of $272.</p>
-                    
-                                    <p>Meanwhile, in New Orleans, the cost is $191 x 4 = $764, thereby justifying the cost of gas and a $150 hotel room in Tampa for one night.</p>
-                    </p>
-
+            <p>Choose an NBA team to view upcoming games within a 500-mile radius of the team's home arena. Results will be
+                sorted in order of starting price.</p>
+            <div class="teamOptions"></div>
+            <button class="submit">Submit</button>
+            <button class="reset">Reset</button>
+        </div>
     </div>
     </div>
-    </div>
-    <div class="empty"></div>
+    <div class='empty'></div>
     <div class="card">
-            <div class="card-header">
-                How it works
-            </div>
-            <div class="card-body">
-                <p>Choose an NBA or NFL team to view upcoming games within a 500-mile radius of the team's home arena. Results will be
-                        sorted in order of starting price. </p>
-                        <p>Upon selecting a specific game, you'll be redirected to SeatGeek in a new browser tab to purchase tickets.
-                        </p>
-    
-        </div>
-        </div>
+        <div class="card-header">
+            Upcoming <span class="teamName"></span> Games
+            
         </div>
 
+        <div class="card-body">
+            <div class="table"></div>
+            <div class="output"></div>
+        </div>
+    </div>
+    </div>
 
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"

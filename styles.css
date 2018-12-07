@@ -7,7 +7,7 @@
   margin-bottom: 15px;
 }
 body {
-    background-color: #17408b;
+    background-color: #013369;
 }
 #first-prop {
     background: #707571;
@@ -29,11 +29,11 @@ body {
   .empty {
       height: 10px;
   }
-  .table {
+  /*.table {
       text-transform: capitalize;
-  }
+  }*/
   .card-header {
-    background: #c9082a;
+    background: #d50a0a;
     color: white;
   }
   .carousel {
