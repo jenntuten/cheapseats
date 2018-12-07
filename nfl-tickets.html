@@ -14,21 +14,25 @@
 </head>
 
 <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Cheap Seats</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                        
-                        <a class="nav-item nav-link" href="nba-tickets.html">NBA Tickets</a>
-                        <a class="nav-item nav-link active" href="#">NFL Tickets<span class="sr-only">(current)</span></a>
-                    </div>
-                </div>
-            </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Cheap Seats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="index.html">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+
+                <a class="nav-item nav-link" href="nba-tickets.html">NBA Tickets</a>
+                <a class="nav-item nav-link active" href="#">NFL Tickets
+                    <span class="sr-only">(current)</span>
+                </a>
+            </div>
+        </div>
+    </nav>
     <div class="card">
         <div class="card-header">
             Cheap Seats
@@ -45,8 +49,9 @@
     <div class='empty'></div>
     <div class="card">
         <div class="card-header">
-            Upcoming <span class="teamName"></span> Games
-            
+            Upcoming
+            <span class="teamName"></span> Games
+
         </div>
 
         <div class="card-body">
@@ -59,7 +64,10 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -253,24 +261,24 @@
                         $('.card-header').css('background', '#000'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'chicago-bears':
+                case 'chicago-bears':
                     teamName = "Chicago Bears",
                         firstLatitude = 41.8623,
                         firstLongitude = -87.6159
-                        $('body').css('background', "#0B162A"),
+                    $('body').css('background', "#0B162A"),
                         $('.card-header').css('background', '#C83803'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'cincinnati-bengals':
+                case 'cincinnati-bengals':
                     teamName = "Cincinnati Bengals",
                         firstLatitude = 39.0961,
                         firstLongitude = -84.5177
-                        $('body').css('background', "#FB4F14"),
+                    $('body').css('background', "#FB4F14"),
                         $('.card-header').css('background', '#000'),
                         $('.card-header').css('color', '#fff')
                     break;
-                
-                    case 'cleveland-browns':
+
+                case 'cleveland-browns':
                     teamName = "Cleveland Browns",
                         firstLatitude = 41.5065,
                         firstLongitude = -81.7,
@@ -278,8 +286,8 @@
                         $('.card-header').css('background', '#FF3C00'),
                         $('.card-header').css('color', '#fff')
                     break;
-                
-                    case 'dallas-cowboys':
+
+                case 'dallas-cowboys':
                     teamName = "Dallas Cowboys",
                         firstLatitude = 32.7459,
                         firstLongitude = -97.0957,
@@ -287,8 +295,8 @@
                         $('.card-header').css('background', '#869397'),
                         $('.card-header').css('color', '#000')
                     break;
-                
-                    case 'denver-broncos':
+
+                case 'denver-broncos':
                     teamName = "Denver Broncos",
                         firstLatitude = 39.74,
                         firstLongitude = -105.02,
@@ -296,8 +304,8 @@
                         $('.card-header').css('background', '#002244'),
                         $('.card-header').css('color', '#fff')
                     break;
-                
-                    case 'detroit-lions':
+
+                case 'detroit-lions':
                     teamName = "Detroit Lions",
                         firstLatitude = 42.34,
                         firstLongitude = -83.0459,
@@ -305,8 +313,8 @@
                         $('.card-header').css('background', '#B0B7BC'),
                         $('.card-header').css('color', '#000')
                     break;
-                
-                    case 'green-bay-packers':
+
+                case 'green-bay-packers':
                     teamName = "Green Bay Packers",
                         firstLatitude = 44.5013,
                         firstLongitude = -88.0622,
@@ -314,7 +322,7 @@
                         $('.card-header').css('background', '#FFB612'),
                         $('.card-header').css('color', '#000')
                     break;
-                    case 'houston-texans':
+                case 'houston-texans':
                     teamName = "Houston Texans",
                         firstLatitude = 29.6847,
                         firstLongitude = -95.4107,
@@ -322,7 +330,7 @@
                         $('.card-header').css('background', '#A71930'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'indianapolis-colts':
+                case 'indianapolis-colts':
                     teamName = "Indianapolis Colts",
                         firstLatitude = 39.7601,
                         firstLongitude = -86.1639,
@@ -330,7 +338,7 @@
                         $('.card-header').css('background', '#A2AAAD'),
                         $('.card-header').css('color', '#000')
                     break;
-                    case 'jacksonville-jaguars':
+                case 'jacksonville-jaguars':
                     teamName = "Jacksonville Jaguars",
                         firstLatitude = 30.32,
                         firstLongitude = -81.64,
@@ -338,7 +346,7 @@
                         $('.card-header').css('background', '#9F792C'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'kansas-city-chiefs':
+                case 'kansas-city-chiefs':
                     teamName = "Kansas City Chiefs",
                         firstLatitude = 39.0489,
                         firstLongitude = -94.4839,
@@ -346,7 +354,7 @@
                         $('.card-header').css('background', '#FFB81C'),
                         $('.card-header').css('color', '#000')
                     break;
-                    case 'los-angeles-chargers':
+                case 'los-angeles-chargers':
                     teamName = "Los Angeles Chargers",
                         firstLatitude = 34.0138,
                         firstLongitude = -118.288,
@@ -354,7 +362,7 @@
                         $('.card-header').css('background', '#FFC20E'),
                         $('.card-header').css('color', '#000')
                     break;
-                    case 'los-angeles-rams':
+                case 'los-angeles-rams':
                     teamName = "Los Angeles Rams",
                         firstLatitude = 33.8643,
                         firstLongitude = -118.261,
@@ -362,7 +370,7 @@
                         $('.card-header').css('background', '#866D4B'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'minnesota-vikings':
+                case 'minnesota-vikings':
                     teamName = "Minnesota Vikings",
                         firstLatitude = 44.9751,
                         firstLongitude = -93.2582,
@@ -370,7 +378,7 @@
                         $('.card-header').css('background', '#FFC62F'),
                         $('.card-header').css('color', '#000')
                     break;
-                    case 'miami-dolphins':
+                case 'miami-dolphins':
                     teamName = "Miami Dolphins",
                         firstLatitude = 25.9579,
                         firstLongitude = -80.2388,
@@ -378,7 +386,7 @@
                         $('.card-header').css('background', '#F26A24'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'new-england-patriots':
+                case 'new-england-patriots':
                     teamName = "New England Patriots",
                         firstLatitude = 42.0906,
                         firstLongitude = -71.2674,
@@ -386,7 +394,7 @@
                         $('.card-header').css('background', '#C60C30'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'new-orleans-saints':
+                case 'new-orleans-saints':
                     teamName = "New Orleans Saints",
                         firstLatitude = 29.9515,
                         firstLongitude = -90.0786,
@@ -394,7 +402,7 @@
                         $('.card-header').css('background', '#101820'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'new-york-giants':
+                case 'new-york-giants':
                     teamName = "New York Giants",
                         firstLatitude = 40.8142,
                         firstLongitude = -74.0737,
@@ -402,7 +410,7 @@
                         $('.card-header').css('background', '#A71930'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'new-york-jets':
+                case 'new-york-jets':
                     teamName = "New York Jets",
                         firstLatitude = 40.8142,
                         firstLongitude = -74.0737,
@@ -410,7 +418,7 @@
                         $('.card-header').css('background', '#fff'),
                         $('.card-header').css('color', '#000')
                     break;
-                    case 'oakland-raiders':
+                case 'oakland-raiders':
                     teamName = "Oakland Raiders",
                         firstLatitude = 37.7469,
                         firstLongitude = -122.201,
@@ -418,7 +426,7 @@
                         $('.card-header').css('background', '#A5ACAF'),
                         $('.card-header').css('color', '#000')
                     break;
-                    case 'philadelphia-eagles':
+                case 'philadelphia-eagles':
                     teamName = "Philadelphia Eagles",
                         firstLatitude = 39.9046,
                         firstLongitude = -75.1675,
@@ -426,7 +434,7 @@
                         $('.card-header').css('background', '#A5ACAF'),
                         $('.card-header').css('color', '#000')
                     break;
-                    case 'pittsburgh-steelers':
+                case 'pittsburgh-steelers':
                     teamName = "Pittsburgh Steelers",
                         firstLatitude = 40.4468,
                         firstLongitude = -80.0158,
@@ -434,7 +442,7 @@
                         $('.card-header').css('background', '#FFB612'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'san-francisco-49ers':
+                case 'san-francisco-49ers':
                     teamName = "San Francisco 49ers",
                         firstLatitude = 37.4023,
                         firstLongitude = -121.969,
@@ -442,7 +450,7 @@
                         $('.card-header').css('background', '#B3995D'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'seattle-seahawks':
+                case 'seattle-seahawks':
                     teamName = "Seattle Seahawks",
                         firstLatitude = 47.5948,
                         firstLongitude = -122.332,
@@ -450,7 +458,7 @@
                         $('.card-header').css('background', '#69BE28'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'tampa-bay-buccaneers':
+                case 'tampa-bay-buccaneers':
                     teamName = "Tampa Bay Buccaneers",
                         firstLatitude = 27.9753,
                         firstLongitude = -82.5034,
@@ -458,7 +466,7 @@
                         $('.card-header').css('background', '#FF7900'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'tennessee-titans':
+                case 'tennessee-titans':
                     teamName = "Tennessee Titans",
                         firstLatitude = 36.1665,
                         firstLongitude = -86.7713,
@@ -466,7 +474,7 @@
                         $('.card-header').css('background', '#4495D1'),
                         $('.card-header').css('color', '#fff')
                     break;
-                    case 'washington-redskins':
+                case 'washington-redskins':
                     teamName = "Washington Redskins",
                         firstLatitude = 38.9071,
                         firstLongitude = -76.8658,
