@@ -549,11 +549,11 @@
                                 <td>${p.venue}</td>
                                 <td>$${p.starting}</td>
                                 <td>$${p.average}</td>
-                                <td>${p.distance}</td>
+                                <td>${p.distance} miles</td>
                                 <td><button class="seatgeek" id = "${p.id}"><a href="${p.url}" target="_blank">Visit SeatGeek</a></button></td>
                                 </tr>`;
                     });
-                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance (in miles)</th><th>Find Tickets</th></tr>';
+                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Find Tickets</th></tr>';
                     let createTable = '<table> ' + tableHead + rowItems.join('') + ' </table>';
                     $(".table").html(createTable);
                     $('.seatgeek').on('click', function () {
