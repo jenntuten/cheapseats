@@ -22,17 +22,18 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="index.html">Home </a>
-        
-                        <a class="nav-item nav-link active" href="#">NBA Tickets<span class="sr-only">(current)</span>
-        
-                        </a>
-                        <a class="nav-item nav-link" href="nfl-tickets.html">NFL Tickets</a>
-                        <a class="nav-item nav-link" href="nhl-tickets.html">NHL Tickets
-                                
-                            </a>
-                    </div>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="index.html">Home </a>
+
+                <a class="nav-item nav-link active" href="#">NBA Tickets
+                    <span class="sr-only">(current)</span>
+
+                </a>
+                <a class="nav-item nav-link" href="nfl-tickets.html">NFL Tickets</a>
+                <a class="nav-item nav-link" href="nhl-tickets.html">NHL Tickets
+
+                </a>
+            </div>
         </div>
     </nav>
     <div class="card">
@@ -40,8 +41,9 @@
             Cheap Seats
         </div>
         <div class="card-body">
-            <p>Choose an NBA team to view upcoming games within a 500-mile radius of the team's home arena.</p><p>Results will be
-                sorted in order of starting price. </p><p>Drive times for out-of-town games assume a speed of 60 mph.</p>
+            <p>Choose an NBA team to view upcoming games within a 500-mile radius of the team's home arena.</p>
+            <p>Results will be sorted in order of starting price. </p>
+            <p>Drive times for out-of-town games assume a speed of 60 mph.</p>
             <div class="teamOptions"></div>
             <button class="submit">Submit</button>
             <button class="reset">Reset</button>
@@ -53,7 +55,7 @@
         <div class="card-header">
             Upcoming
             <span class="teamName"></span> Games
-
+            <button class="filter">Filter by weekend games</button>
         </div>
 
         <div class="card-body">
@@ -68,73 +70,78 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
     <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+
     <script>
-function initialize() {
-        $('.teamName').html(`NBA`)
+        
+        function initialize() {
+            $('.teamName').html(`NBA`)
+            $('.filter').hide()
+            let nbaUrl = "https://api.seatgeek.com/2/events?per_page=25&taxonomies.name=nba&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
 
-        let nbaUrl = "https://api.seatgeek.com/2/events?taxonomies.name=nba&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
+            let nbaArray = [];
+            $.ajax({
+                url: nbaUrl,
+                method: "GET"
+            }).then(data2 => {
+                // console.log('data2.events', data2.events)
+                let gameFilter2 = data2.events;
+                let filteredgames;
+                let games2 = []
+                for (let r = 0; r < gameFilter2.length; r++) {
+                    //console.log('gameFilter2[r]', gameFilter2[r]);
+                    filteredgames = gameFilter2[r]
+                    //console.log('filtered inside loop', filteredgames)
+                    Object.keys(filteredgames).forEach(function (key) {
+                        if (filteredgames.stats.average_price === null || filteredgames.stats.lowest_price === null) {
+                            filteredgames.stats.average_price = 0;
+                            filteredgames.stats.lowest_price = 0;
+                        }
+                    })
+                    games2.push(filteredgames)
+                }
+                //console.log('GAME FILTER:', games2);
 
-        let nbaArray = [];
-        $.ajax({
-            url: nbaUrl,
-            method: "GET"
-        }).then(data2 => {
-            console.log('data2.events', data2.events)
-            let gameFilter2 = data2.events;
-            let filteredgames;
-            let games2 = []
-            for (let r = 0; r < gameFilter2.length; r++) {
-                console.log('gameFilter2[r]', gameFilter2[r]);
-                filteredgames = gameFilter2[r]
-                console.log('filtered inside loop', filteredgames)
-                Object.keys(filteredgames).forEach(function (key) {
-                    if (filteredgames.stats.average_price === null || filteredgames.stats.lowest_price === null) {
-                        filteredgames.stats.average_price = 0;
-                        filteredgames.stats.lowest_price = 0;
-                    }
-                })
-                games2.push(filteredgames)
-            }
-            console.log('GAME FILTER:', games2);
+                for (let q = 0; q < games2.length; q++) {
 
-            for (let q = 0; q < games2.length; q++) {
+                    //console.log("Matchup: ", games2[q].title)
+                    //console.log("Location: ", games2[q].venue.display_location + " - ", games2[q].venue.name)
+                    //console.log("Date and Time: ", moment(games2[q].datetime_local).format("dddd, LL"))
+                    //console.log("Average Ticket Price: $" + games2[q].stats.average_price.toFixed(2))
 
-                console.log("Matchup: ", games2[q].title)
-                console.log("Location: ", games2[q].venue.display_location + " - ", games2[q].venue.name)
-                console.log("Date and Time: ", moment(games2[q].datetime_local).format("dddd, LL"))
-                console.log("Average Ticket Price: $" + games2[q].stats.average_price.toFixed(2))
+                    //Calculate distance using Geodata2Source code.
 
-                //Calculate distance using Geodata2Source code.
+                    nbaArray.push({
+                        game: games2[q].title,
+                        url: games2[q].url,
+                        //distance: parseInt(dist),
+                        average: games2[q].stats.average_price.toFixed(2),
+                        starting: games2[q].stats.lowest_price.toFixed(2),
+                        date: moment(games2[q].datetime_local).format("dddd, LL"),
+                        time: moment(games2[q].datetime_local).format("LT"),
+                        location: games2[q].venue.display_location,
+                        venue: games2[q].venue.name,
+                        id: [q]
+                    })//Push to array
+                    //console.log('new array:', nbaArray)
 
-                nbaArray.push({
-                    game: games2[q].title,
-                    url: games2[q].url,
-                    //distance: parseInt(dist),
-                    average: games2[q].stats.average_price.toFixed(2),
-                    starting: games2[q].stats.lowest_price.toFixed(2),
-                    date: moment(games2[q].datetime_local).format("dddd, LL"),
-                    time: moment(games2[q].datetime_local).format("LT"),
-                    location: games2[q].venue.display_location,
-                    venue: games2[q].venue.name,
-                    id: [q]
-                })//Push to array
-                console.log('new array:', nbaArray)
+                    var lessThan500 = nbaArray.filter(obj => {
+                        return obj.starting > 1 && obj.average > 1;
+                    })
+                    //console.log('lessThan500', lessThan500)
+                    lessThan500.sort(function (a, b) {
+                        return parseFloat(a.starting) - parseFloat(b.starting);
+                    });
 
-                var lessThan500 = nbaArray.filter(obj => {
-                    return obj.starting > 1 && obj.average > 1;
-                })
-                console.log('lessThan500', lessThan500)
-                lessThan500.sort(function (a, b) {
-                    return parseFloat(a.starting) - parseFloat(b.starting);
-                });
-
-                let rows = lessThan500.map(function (s) {
-                    return `<tr><td>${s.game}</td>
+                    let rows = lessThan500.map(function (s) {
+                        return `<tr><td>${s.game}</td>
                                     <td>${s.date}</td>
                                     <td>${s.time}</td>
                                     <td>${s.venue} - ${s.location}</td>
@@ -145,34 +152,34 @@ function initialize() {
                                 
                                 <td><button class="seatgeek" id = "${s.id}"><a href="${s.url}" target="_blank">Visit SeatGeek</a></button></td>
                                 </tr>`;
-                });
-                let tblHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Find Tickets</th></tr>';
-                let makeTable = '<table> ' + tblHead + rows.join('') + ' </table>';
-                $(".table").html(makeTable);
-                $('.seatgeek').on('click', function () {
-                    console.log('SeatGeek clicked: ', this.id);
+                    });
+                    let tblHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Find Tickets</th></tr>';
+                    let makeTable = '<table> ' + tblHead + rows.join('') + ' </table>';
+                    $(".table").html(makeTable);
+                    $('.seatgeek').on('click', function () {
+                        //console.log('SeatGeek clicked: ', this.id);
 
-                    let chosen1 = this.id;
+                        let chosen1 = this.id;
 
-                    console.log('chosen1: ', lessThan500[chosen1].url)
+                        //console.log('chosen1: ', lessThan500[chosen1].url)
 
-                    function newTab() {
-                        target = "_blank";
-                        href = lessThan500[chosen1].url;
-                        console.log('href', href)
-                    }
+                        function newTab() {
+                            target = "_blank";
+                            href = lessThan500[chosen1].url;
+                            console.log('href', href)
+                        }
 
-                    // And then
-                    newTab(`${lessThan500[chosen1].url}`);
-                })
-                $('.output').append(``);
+                        // And then
+                        newTab(`${lessThan500[chosen1].url}`);
+                    })
+                    $('.output').append(``);
 
-            }//For loop(i)
-        })//data2 success
-}//initialize
-window.onload = function() {
-    initialize()
-}
+                }//For loop(i)
+            })//data2 success
+        }//initialize
+        window.onload = function () {
+            initialize()
+        }
         $('.teamOptions').append(`<select class='teamSelector' name='ChooseTeam'>
                 <option value='selection'>Select your team</option>
                 <option value='atlanta-hawks'>Atlanta Hawks</option>
@@ -212,7 +219,7 @@ window.onload = function() {
         });
 
         let theGames;
-
+let lessThan;
         //Get user team's coordinates for distance function.
         let teamName;
         let firstLatitude;
@@ -224,6 +231,7 @@ window.onload = function() {
 
 
         $('.submit').on('click', function () {
+          // $('.filter').show()
 
             let userTeam = $('.teamSelector').val();
             let arenaCoordinates = userTeam;
@@ -472,25 +480,25 @@ window.onload = function() {
                         $('.card-header').css('color', "#fff")
                     break;
                 default:
-                    console.log('Sorry, ' + arenaCoordinates + 'is not valid.');
+                //console.log('Sorry, ' + arenaCoordinates + 'is not valid.');
             }
 
             //Change slug to user team.
-            let teamUrl = "https://api.seatgeek.com/2/events?performers.slug=" + userTeam + "&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
+            let teamUrl = "https://api.seatgeek.com/2/events?per_page=25&performers.slug=" + userTeam + "&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
             console.log(teamUrl);
             let newArray = [];
             $.ajax({
                 url: teamUrl,
                 method: "GET"
             }).then(data => {
-                console.log('data.events', data.events)
+                //console.log('data.events', data.events)
                 let gameFilter = data.events;
                 let filteredGames;
                 let games = []
                 for (let r = 0; r < gameFilter.length; r++) {
-                    console.log('gameFilter[r]', gameFilter[r]);
+                    //console.log('gameFilter[r]', gameFilter[r]);
                     filteredGames = gameFilter[r]
-                    console.log('filtered inside loop', filteredGames)
+                    //console.log('filtered inside loop', filteredGames)
                     Object.keys(filteredGames).forEach(function (key) {
                         if (filteredGames.stats.average_price === null || filteredGames.stats.lowest_price === null) {
                             filteredGames.stats.average_price = 0;
@@ -499,19 +507,19 @@ window.onload = function() {
                     })
                     games.push(filteredGames)
                 }
-                console.log('GAME FILTER:', games);
+                //console.log('GAME FILTER:', games);
 
                 for (let i = 0; i < games.length; i++) {
 
-                    console.log("Matchup: ", games[i].title)
+                    /*console.log("Matchup: ", games[i].title)
                     console.log("Location: ", games[i].venue.display_location + " - ", games[i].venue.name)
                     console.log("Date and Time: ", moment(games[i].datetime_local).format("dddd, LL"))
-                    console.log("Average Ticket Price: $" + games[i].stats.average_price.toFixed(2))
+                    console.log("Average Ticket Price: $" + games[i].stats.average_price.toFixed(2))*/
 
                     //Calculate distance using GeoDataSource code.
 
                     let secondLatitude = games[i].venue.location.lat;
-                    console.log('2ndlat', secondLatitude)
+                    //console.log('2ndlat', secondLatitude)
                     let secondLongitude = games[i].venue.location.lon;
                     var dist = distance(firstLatitude, firstLongitude, secondLatitude, secondLongitude, 'M');
 
@@ -544,7 +552,7 @@ window.onload = function() {
                     let driveTime = dist / 60;
                     let driveMinutes = driveTime.toString();
                     let drivingMinutes;
-                    if (driveMinutes.length <2) {
+                    if (driveMinutes.length < 2) {
                         drivingMinutes = '0.00'
                     }
                     else {
@@ -553,16 +561,16 @@ window.onload = function() {
                     let splitMinutes = drivingMinutes.split('.');
                     let theHours = splitMinutes[0]
                     let theMinutes = splitMinutes[1];
-                    if(theMinutes.length > 2) theMinutes = theMinutes.substring(0,2);
+                    if (theMinutes.length > 2) theMinutes = theMinutes.substring(0, 2);
 
                     function calculateDrive(a) {
                         return a / 60
                     };
                     function calculateMinutes(b) {
-                        return (b/100)*60
+                        return (b / 100) * 60
                     };
-                    
-                    let userDrive = theHours+'h '+calculateMinutes(theMinutes).toFixed(0)+'m';
+
+                    let userDrive = theHours + 'h ' + calculateMinutes(theMinutes).toFixed(0) + 'm';
 
                     newArray.push({
                         game: games[i].title,
@@ -579,7 +587,7 @@ window.onload = function() {
                     })//Push to array
                     console.log('new array:', newArray)
 
-                    var lessThan = newArray.filter(obj => {
+                     lessThan = newArray.filter(obj => {
                         return obj.distance < 500 && obj.starting > 1 && obj.average > 1;
                     })
 
@@ -603,17 +611,23 @@ window.onload = function() {
                     let tableHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Drive Time</th><th>Find Tickets</th></tr>';
                     let createTable = '<table> ' + tableHead + rowItems.join('') + ' </table>';
                     $(".table").html(createTable);
+                    
+
+                    
+
+
+
                     $('.seatgeek').on('click', function () {
-                        console.log('SeatGeek clicked: ', this.id);
+                        //console.log('SeatGeek clicked: ', this.id);
 
                         let chosen = this.id;
 
-                        console.log('CHOSEN: ', lessThan[chosen].url)
+                        // console.log('CHOSEN: ', lessThan[chosen].url)
 
                         function openInNewTab() {
                             target = "_blank";
                             href = lessThan[chosen].url;
-                            console.log('href', href)
+                            // console.log('href', href)
                         }
 
                         // And then
@@ -623,6 +637,41 @@ window.onload = function() {
 
                 }//For loop(i)
             })//Data success
+            //filter out by weekend games
+           /*$('.filter').on('click', function(){
+                        console.log('filter clicked')
+                        var find = lessThan.filter(function (result) {
+                        return result.date === "Friday" || result.date === 'Saturday';
+                    });
+                    return find[0];
+                    console.log('find',find[0],'FIND',find)
+                    if (find.length >1) {
+                        $('.table').html('Sorry, no results were found!')
+                    }
+                    else{
+                        find.sort(function (a, b) {
+                        return parseFloat(a.starting) - parseFloat(b.starting);
+                    });
+
+                    let rowItems = find.map(function (p) {
+                        return `<tr><td>${p.game}</td>
+                                    <td>${p.date}</td>
+                                    <td>${p.time}</td>
+                                    <td>${p.venue} - ${p.location}</td>
+                                
+                                <td>$${p.starting}</td>
+                                <td>$${p.average}</td>
+                                <td>${p.distance} miles</td>
+                                <td>${p.driveTime}</td>
+                                <td><button class="seatgeek" id = "${p.id}"><a href="${p.url}" target="_blank">Visit SeatGeek</a></button></td>
+                                </tr>`;
+                    });
+                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Drive Time</th><th>Find Tickets</th></tr>';
+                    let createTable = '<table> ' + tableHead + rowItems.join('') + ' </table>';
+                    $(".table").html(createTable);
+                    }
+                    })//filter function*/
+        
             if (teamName != undefined) {
                 $('.teamName').html(`${teamName}`)
             }
@@ -632,7 +681,7 @@ window.onload = function() {
         $(".reset").on('click', function () {
             $('body').css('background', '#17408b'),
                 $('.card-header').css('background', '#c9082a');
-                $('.card-header').css('color','white')
+            $('.card-header').css('color', 'white')
             $(".table").html("")
             $('.teamName').html("")
             initialize()

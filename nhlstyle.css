@@ -149,7 +149,17 @@ td:nth-of-type(6):before {
     content: "Average Ticket Price: ";
     font-weight: bold;
     margin-right: 5px;
+}/*
+td:nth-of-type(7):before {
+    content: "Distance: ";
+    font-weight: bold;
+    margin-right: 5px;
 }
+td:nth-of-type(8):before {
+    content: "Drive Time: ";
+    font-weight: bold;
+    margin-right: 5px;
+}*/
 .distance {
     content: "Distance: ";
     font-weight: bold;

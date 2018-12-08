@@ -91,7 +91,7 @@
 function initialize() {
     $('.teamName').html(`NHL`)
 
-        let nhlUrl = "https://api.seatgeek.com/2/events?taxonomies.name=nhl&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
+        let nhlUrl = "https://api.seatgeek.com/2/events?per_page=25&taxonomies.name=nhl&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
 
         let nhlArray = [];
         $.ajax({
@@ -506,7 +506,7 @@ window.onload = function() {
             }
 
             //Change slug to user team.
-            let teamUrl = "https://api.seatgeek.com/2/events?performers.slug=" + userTeam + "&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
+            let teamUrl = "https://api.seatgeek.com/2/events?per_page=25&performers.slug=" + userTeam + "&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
             console.log(teamUrl);
             let newArray = [];
             $.ajax({
