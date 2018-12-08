@@ -7,7 +7,7 @@
   margin-bottom: 15px;
 }
 body {
-    background-color: #17408b;
+    background-color: #18008b;
 }
 #first-prop {
     background: #707571;
@@ -64,7 +64,7 @@ table {
       height: 50px;
   }
   
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 800px) {
     table {
         width: auto;
     }

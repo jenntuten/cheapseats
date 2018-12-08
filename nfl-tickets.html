@@ -39,8 +39,8 @@
             Cheap Seats
         </div>
         <div class="card-body">
-            <p>Choose an NFL team to view upcoming games within a 500-mile radius of the team's home arena. Results will be
-                sorted in order of starting price.</p>
+            <p>Choose an NFL team to view upcoming games within a 500-mile radius of the team's home arena.</p> <p>Results will be
+                sorted in order of starting price. </p><p>Drive times for out-of-town games assume a speed of 60 mph.</p>
             <div class="teamOptions"></div>
             <button class="submit">Submit</button>
             <button class="reset">Reset</button>
@@ -73,7 +73,7 @@
     <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-
+function initialize() {
         $('.teamName').html(`NFL`)
 
         let nflUrl = "https://api.seatgeek.com/2/events?taxonomies.name=nfl&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
@@ -168,6 +168,10 @@
 
             }//For loop(i)
         })//data2 success
+}//initialize
+window.onload = function() {
+    initialize()
+}
         $('.teamOptions').append(`<select class='teamSelector' name='ChooseTeam'>
                 <option value='selection'>Select your team</option>
                 <option value='arizona-cardinals'>Arizona Cardinals</option>
@@ -555,6 +559,30 @@
 
                     let dateTime = moment(games[i].datetime_local).format("dddd, LL");
 
+                    //Calculating hours driving
+                    let driveTime = dist / 60;
+                    let driveMinutes = driveTime.toString();
+                    let drivingMinutes;
+                    if (driveMinutes.length <2) {
+                        drivingMinutes = '0.00'
+                    }
+                    else {
+                        drivingMinutes = driveMinutes.toString();
+                    }
+                    let splitMinutes = drivingMinutes.split('.');
+                    let theHours = splitMinutes[0]
+                    let theMinutes = splitMinutes[1];
+                    if(theMinutes.length > 2) theMinutes = theMinutes.substring(0,2);
+
+                    function calculateDrive(a) {
+                        return a / 60
+                    };
+                    function calculateMinutes(b) {
+                        return (b/100)*60
+                    };
+                    
+                    let userDrive = theHours+'h '+calculateMinutes(theMinutes).toFixed(0)+'m';
+
                     newArray.push({
                         game: games[i].title,
                         url: games[i].url,
@@ -564,6 +592,7 @@
                         date: moment(games[i].datetime_local).format("dddd, LL"),
                         time: moment(games[i].datetime_local).format("LT"),
                         location: games[i].venue.display_location,
+                        driveTime: userDrive,
                         venue: games[i].venue.name,
                         id: [i]
                     })//Push to array
@@ -586,10 +615,11 @@
                                 <td>$${p.starting}</td>
                                 <td>$${p.average}</td>
                                 <td>${p.distance} miles</td>
+                                <td>${p.driveTime}</td>
                                 <td><button class="seatgeek" id = "${p.id}"><a href="${p.url}" target="_blank">Visit SeatGeek</a></button></td>
                                 </tr>`;
                     });
-                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Find Tickets</th></tr>';
+                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Time</th><th>Location</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Drive Time</th><th>Find Tickets</th></tr>';
                     let createTable = '<table> ' + tableHead + rowItems.join('') + ' </table>';
                     $(".table").html(createTable);
                     $('.seatgeek').on('click', function () {
@@ -620,9 +650,11 @@
 
         $(".reset").on('click', function () {
             $('body').css('background', '#17408b'),
-                $('.card-header').css('background', '#c9082a')
+                $('.card-header').css('background', '#c9082a');
+                $('.card-header').css('color', '#fff')
             $(".table").html("")
             $('.teamName').html("")
+            initialize()
         })
 
     </script>

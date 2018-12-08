@@ -30,25 +30,25 @@
                 </a>
                 <a class="nav-item nav-link" href="nfl-tickets.html">NFL Tickets</a>
                 <a class="nav-item nav-link active" href="#">NHL Tickets
-                        <span class="sr-only">(current)</span>
-                    </a>
+                    <span class="sr-only">(current)</span>
+                </a>
             </div>
         </div>
     </nav>
-    <!--<div class="card">
+    <div class="card">
         <div class="card-header">
             Cheap Seats
         </div>
         <div class="card-body">
-            <p>Choose an NHL team to view upcoming games within a 500-mile radius of the team's home arena. Results will be
-                sorted in order of starting price.</p>
+            <p>Choose an NHL team to view upcoming games within a 500-mile radius of the team's home arena. </p><p>Results will be
+                sorted in order of starting price.</p> Drive times for out-of-town games assume a speed of 60 mph.</p>
             <div class="teamOptions"></div>
             <button class="submit">Submit</button>
             <button class="reset">Reset</button>
         </div>
     </div>
-    </div>-->
-    <div class="card">
+    </div>
+    <!--<div class="card">
             <div class="card-header">
                 Coming Soon: NHL
             </div>
@@ -58,7 +58,7 @@
                 
             </div>
         </div>
-        </div>
+        </div>-->
     <div class='empty'></div>
     <div class="card">
         <div class="card-header">
@@ -79,14 +79,17 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
     <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
 
-        $('.teamName').html(`NHL`)
+        
+
+function initialize() {
+    $('.teamName').html(`NHL`)
 
         let nhlUrl = "https://api.seatgeek.com/2/events?taxonomies.name=nhl&client_id=MTQyMjQwNjN8MTU0Mzk1MjQxOS45OQ"
 
@@ -97,19 +100,19 @@
         }).then(data2 => {
             console.log('data2.events', data2.events)
             let gameFilter2 = data2.events;
-            let filteredgames22;
+            let filteredgames;
             let games2 = []
             for (let r = 0; r < gameFilter2.length; r++) {
                 console.log('gameFilter2[r]', gameFilter2[r]);
-                filteredgames22 = gameFilter2[r]
-                console.log('filtered inside loop', filteredgames22)
-                Object.keys(filteredgames22).forEach(function (key) {
-                    if (filteredgames22.stats.average_price === null || filteredgames22.stats.lowest_price === null) {
-                        filteredgames22.stats.average_price = 0;
-                        filteredgames22.stats.lowest_price = 0;
+                filteredgames = gameFilter2[r]
+                console.log('filtered inside loop', filteredgames)
+                Object.keys(filteredgames).forEach(function (key) {
+                    if (filteredgames.stats.average_price === null || filteredgames.stats.lowest_price === null) {
+                        filteredgames.stats.average_price = 0;
+                        filteredgames.stats.lowest_price = 0;
                     }
                 })
-                games2.push(filteredgames22)
+                games2.push(filteredgames)
             }
             console.log('GAME FILTER:', games2);
 
@@ -180,38 +183,44 @@
 
             }//For loop(i)
         })//data2 success
+}//initialize
+window.onload = function() {
+    initialize()
+}
+
         $('.teamOptions').append(`<select class='teamSelector' name='ChooseTeam'>
                 <option value='selection'>Select your team</option>
-                <option value='atlanta-hawks'>Atlanta Hawks</option>
-                <option value='boston-celtics'>Boston Celtics</option>
-                <option value='brooklyn-nets'>Brooklyn Nets</option>
-                <option value='charlotte-hornets'>Charlotte Hornets</option>
-                <option value='chicago-bulls'>Chicago Bulls</option>
-                <option value='cleveland-cavaliers'>Cleveland Cavaliers</option>
-                <option value='dallas-mavericks'>Dallas Mavericks</option>
-                <option value='denver-nuggets'>Denver Nuggets</option>
-                <option value='detroit-pistons'>Detroit Pistons</option>
-                <option value='golden-state-warriors'>Golden State Warriors</option>
-                <option value='houston-rockets'>Houston Rockets</option>
-                <option value='indiana-pacers'>Indiana Pacers</option>
-                <option value='los-angeles-clippers'>LA Clippers</option>
-                <option value='los-angeles-lakers'>Los Angeles Lakers</option>
-                <option value='memphis-grizzlies'>Memphis Grizzlies</option>
-                <option value='miami-heat'>Miami Heat</option>
-                <option value='milwaukee-bucks'>Milwaukee Bucks</option>
-                <option value='minnesota-timberwolves'>Minnesota Timberwolves</option>
-                <option value='new-orleans-pelicans'>New Orleans Pelicans</option>
-                <option value='new-york-knicks'>New York Knicks</option>
-                <option value='oklahoma-city-thunder'>Oklahoma City Thunder</option>
-                <option value='orlando-magic'>Orlando Magic</option>
-                <option value='philadelphia-76ers'>Philadelphia 76ers</option>
-                <option value='phoenix-suns'>Phoenix Suns</option>
-                <option value='portland-trail-blazers'>Portland Trail Blazers</option>
-                <option value='sacramento-kings'>Sacramento Kings</option>
-                <option value='san-antonio-spurs'>San Antonio Spurs</option>
-                <option value='toronto-raptors'>Toronto Raptors</option>
-                <option value='utah-jazz'>Utah Jazz</option>
-                <option value='washington-wizards'>Washington Wizards</option>
+                <option value='anaheim-ducks'>Anaheim Ducks</option>
+                <option value='arizona-coyotes'>Arizona Coyotes</option>
+                <option value='boston-bruins'>Boston Bruins</option>
+                <option value='buffalo-sabres'>Buffalo Sabres</option>
+                <option value='calgary-flames'>Calgary Flames</option>
+                <option value='carolina-hurricanes'>Carolina Hurricanes</option>
+                <option value='chicago-blackhawks'>Chicago Blackhawks</option>
+                <option value='colorado-avalanche'>Colorado Avalanche</option>
+                <option value='columbus-blue-jackets'>Columbus Blue Jackets</option>
+                <option value='dallas-stars'>Dallas Stars</option>
+                <option value='detroit-red-wings'>Detroit Red Wings</option>
+                <option value='edmonton-oilers'>Edmonton Oilers</option>
+                <option value='florida-panthers'>Florida Panthers</option>
+                <option value='los-angeles-kings'>Los Angeles Kings</option>
+                <option value='minnesota-wild'>Minnesota Wild</option>
+                <option value='montreal-canadiens'>Montreal Canadiens</option>
+                <option value='nashville-predators'>Nashville Predators</option>
+                <option value='new-jersey-devils'>New Jersey Devils</option>
+                <option value='new-york-islanders'>New York Islanders</option>
+                <option value='new-york-rangers'>New York Rangers</option>
+                <option value='ottawa-senators'>Ottawa Senators</option>
+                <option value='philadelphia-flyers'>Philadelphia Flyers</option>
+                <option value='pittsburgh-penguins'>Pittsburgh Penguins</option>
+                <option value='san-jose-sharks'>San Jose Sharks</option>
+                <option value='st-louis-blues'>St. Louis Blues</option>
+                <option value='tampa-bay-lightning'>Tampa Bay Lightning</option>
+                <option value='toronto-maple-leafs'>Toronto Maple Leafs</option>
+                <option value='vancouver-canucks'>Vancouver Canucks</option>
+                <option value='vegas-golden-knights'>Vegas Golden Knights</option>
+                <option value='washington-capitals'>Washington Capitals</option>
+                <option value='winnipeg-jets'>Winnipeg Jets</option>
                 </select>`)
         $(window).resize(function () {
             if ($(window).width() <= 6000) $('.td').addClass("p");
@@ -237,245 +246,259 @@
 
             //Get each team arena's coordinates.
             switch (arenaCoordinates) {
-                case 'atlanta-hawks':
-                    teamName = "Atlanta Hawks",
-                        firstLatitude = 33.7566,
-                        firstLongitude = -84.3969,
-                        $('body').css('background', "#E03A3E"),
-                        $('.card-header').css('background', '#C1D32F'),
-                        $('.card-header').css('color', '#000000')
-                    break;
-                case 'boston-celtics':
-                    teamName = "Boston Celtics",
-                        firstLatitude = 42.3653,
-                        firstLongitude = -71.0618,
-                        $('body').css('background', "#007A33"),
-                        $('.card-header').css('background', '#BA9653')
-                    $('.card-header').css('color', '#000000')
-                    break;
-                case 'brooklyn-nets':
-                    teamName = "Brooklyn Nets",
-                        firstLatitude = 40.6837,
-                        firstLongitude = -73.9788,
-                        $('body').css('background', "#000000"),
-                        $('.card-header').css('background', '#000000'),
-                        $('.card-header').css('color', '#ffffff')
-                    break;
-                case 'charlotte-hornets':
-                    teamName = "Charlotte Hornets",
-                        firstLatitude = 35.2248,
-                        firstLongitude = -80.8403,
-
-                        $('body').css('background', "#1D1160"),
-                        $('.card-header').css('background', '#00788C'),
-                        $('.card-header').css('color', '#ffffff')
-                    break;
-                case 'chicago-bulls':
-                    teamName = "Chicago Bulls",
-                        firstLatitude = 41.8806,
-                        firstLongitude = -87.6742,
-                        $('body').css('background', "#CE1141"),
+                case 'anaheim-ducks':
+                    teamName = "Anaheim Ducks",
+                        firstLatitude = 33.8353,
+                        firstLongitude = -117.915,
+                        $('body').css('background', "#F47A38"),
                         $('.card-header').css('background', '#000'),
                         $('.card-header').css('color', '#fff')
                     break;
-                case 'cleveland-cavaliers':
-                    teamName = "Cleveland Cavaliers",
-                        firstLatitude = 41.4971,
-                        firstLongitude = -81.6884,
-                        $('body').css('background', '#6F263D'),
-                        $('.card-header').css('background', "#FFB81C"),
-                        $('.card-header').css('color', "#000000")
+                case 'arizona-coyotes':
+                    teamName = "Arizona Coyotes",
+                        firstLatitude = 33.5315,
+                        firstLongitude = -112.261,
+                        $('body').css('background', "#8C2633"),
+                        $('.card-header').css('background', '#E2D6B5')
+                    $('.card-header').css('color', '#000000')
                     break;
-                case 'dallas-mavericks':
-                    teamName = "Dallas Mavericks",
-                        firstLatitude = 32.7904,
-                        firstLongitude = -96.8103,
-                        $('body').css('background', '#00538C'),
-                        $('.card-header').css('background', '#B8C4CA'),
+                case 'boston-bruins':
+                    teamName = "Boston Bruins",
+                        firstLatitude = 42.3653,
+                        firstLongitude = -71.0618,
+                        $('body').css('background', "#000000"),
+                        $('.card-header').css('background', '#FFB81C'),
                         $('.card-header').css('color', '#000000')
                     break;
-                case 'denver-nuggets':
-                    teamName = "Denver Nuggets",
+                case 'buffalo-sabres':
+                    teamName = "Buffalo Sabres",
+                        firstLatitude = 42.8759,
+                        firstLongitude = -78.8767,
+
+                        $('body').css('background', "#002654"),
+                        $('.card-header').css('background', '#FCB514'),
+                        $('.card-header').css('color', '#ffffff')
+                    break;
+                case 'calgary-flames':
+                    teamName = "Calgary Flames",
+                        firstLatitude = 51.0382,
+                        firstLongitude = -114.051,
+                        $('body').css('background', "#C8102E"),
+                        $('.card-header').css('background', '#F1BE48'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                case 'carolina-hurricanes':
+                    teamName = "Carolina Hurricanes",
+                        firstLatitude = 35.804,
+                        firstLongitude = -78.7265,
+                        $('body').css('background', '#CC0000'),
+                        $('.card-header').css('background', "#000"),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                case 'chicago-blackhawks':
+                    teamName = "Chicago Blackhawks",
+                        firstLatitude = 41.8806,
+                        firstLongitude = -87.6742,
+                        $('body').css('background', '#CF0A2C'),
+                        $('.card-header').css('background', '#000'),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                case 'colorado-avalanche':
+                    teamName = "Colorado Avalanche",
                         firstLatitude = 39.7487,
                         firstLongitude = -105.008,
-                        $('body').css('background', '#0E2240'),
-                        $('.card-header').css('background', "#FEC524"),
-                        $('.card-header').css('color', "#000000")
+                        $('body').css('background', '#6F263D'),
+                        $('.card-header').css('background', "#236192"),
+                        $('.card-header').css('color', "#fff")
                     break;
-                case 'detroit-pistons':
-                    teamName = "Detroit Pistons",
+                case 'columbus-blue-jackets':
+                    teamName = "Columbus Blue Jackets",
+                        firstLatitude = 39.97,
+                        firstLongitude = -83.01,
+                        $('body').css('background', '#002654'),
+                        $('.card-header').css('background', "#CE1126"),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                case 'dallas-stars':
+                    teamName = "Dallas Stars",
+                        firstLatitude = 32.7904,
+                        firstLongitude = -96.8103,
+                        $('body').css('background', '#006847'),
+                        $('.card-header').css('background', "#8F8F8C"),
+                        $('.card-header').css('color', '#fff')
+                    break;
+                case 'detroit-red-wings':
+                    teamName = "Detroit Red Wings",
                         firstLatitude = 42.3411,
                         firstLongitude = -83.0554,
-                        $('body').css('background', '#C8102E'),
-                        $('.card-header').css('background', "#006BB6"),
+                        $('body').css('background', '#CE1126'),
+                        $('.card-header').css('background', "#fff"),
+                        $('.card-header').css('color', "#000")
+                    break;
+                case 'edmonton-oilers':
+                    teamName = "Edmonton Oilers",
+                        firstLatitude = 53.547,
+                        firstLongitude = -113.497,
+                        $('body').css('background', '#041E42'),
+                        $('.card-header').css('background', "#FF4C00"),
                         $('.card-header').css('color', "#fff")
                     break;
-                case 'golden-state-warriors':
-                    teamName = "Golden State Warriors",
-                        firstLatitude = 37.7496,
-                        firstLongitude = -122.201,
-                        $('body').css('background', '#006BB6'),
-                        $('.card-header').css('background', "#FDB927"),
-                        $('.card-header').css('color', '#000000')
-                    break;
-                case 'houston-rockets':
-                    teamName = "Houston Rockets",
-                        firstLatitude = 29.7505,
-                        firstLongitude = -95.3622,
-                        $('body').css('background', '#CE1141'),
-                        $('.card-header').css('background', "#000000"),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'indiana-pacers':
-                    teamName = "Indiana Pacers",
-                        firstLatitude = 39.7648,
-                        firstLongitude = -86.1563,
-                        $('body').css('background', '#002D62'),
-                        $('.card-header').css('background', "#FDBB30"),
-                        $('.card-header').css('color', "#000000")
-                    break;
-                case 'los-angeles-clippers':
-                    teamName = "LA Clippers",
-                        firstLatitude = 34.0431,
-                        firstLongitude = -118.267,
-                        $('body').css('background', '#C8102E'),
-                        $('.card-header').css('background', '#1D42BA'),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'los-angeles-lakers':
-                    teamName = "Los Angeles Lakers",
-                        firstLatitude = 34.0431,
-                        firstLongitude = -118.267,
-                        $('body').css('background', '#552583'),
-                        $('.card-header').css('background', '#FDB927'),
-                        $('.card-header').css('color', '#000000')
-                    break;
-                case 'memphis-grizzlies':
-                    teamName = "Memphis Grizzlies",
-                        firstLatitude = 35.1383,
-                        firstLongitude = -90.0522,
-                        $('body').css('background', '#5D76A9'),
-                        $('.card-header').css('background', '#12173F'),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'miami-heat':
-                    teamName = "Miami Heat",
-                        firstLatitude = 25.7813,
-                        firstLongitude = -80.1874,
-                        $('body').css('background', '#98002E'),
-                        $('.card-header').css('background', '#F9A01B'),
-                        $('.card-header').css('color', "#000000")
-                    break;
-                case 'milwaukee-bucks':
-                    teamName = "Milwaukee Bucks",
-                        firstLatitude = 43.0417,
-                        firstLongitude = -87.9162,
-                        $('body').css('background', '#00471B'),
-                        $('.card-header').css('background', '#EEE1C6'),
-                        $('.card-header').css('color', '#000000')
-                    break;
-                case 'minnesota-timberwolves':
-                    teamName = "Minnesota Timberwolves",
-                        firstLatitude = 44.9795,
-                        firstLongitude = -93.276,
-                        $('body').css('background', '#0C2340'),
-                        $('.card-header').css('background', '#236192'),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'new-orleans-pelicans':
-                    teamName = "New Orleans Pelicans",
-                        firstLatitude = 29.949,
-                        firstLongitude = -90.0821,
-                        $('body').css('background', '#0C2340'),
+                case 'florida-panthers':
+                    teamName = "Florida Panthers",
+                        firstLatitude = 26.1585,
+                        firstLongitude = -80.3256,
+                        $('body').css('background', '#041E42'),
                         $('.card-header').css('background', '#C8102E'),
                         $('.card-header').css('color', "#fff")
                     break;
-                case 'new-york-knicks':
-                    teamName = "New York Knicks",
-                        firstLatitude = 40.7509,
-                        firstLongitude = -73.9943,
-                        $('body').css('background', '#006BB6'),
-                        $('.card-header').css('background', '#F58426'),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'oklahoma-city-thunder':
-                    teamName = "Oklahoma City Thunder",
-                        firstLatitude = 35.4634,
-                        firstLongitude = -97.5146,
-                        $('body').css('background', '#007AC1'),
-                        $('.card-header').css('background', '#EF3B24'),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'orlando-magic':
-                    teamName = "Orlando Magic",
-                        firstLatitude = 28.5402,
-                        firstLongitude = -81.3839,
-                        $('body').css('background', '#0077C0'),
-                        $('.card-header').css('background', '#C4CED4'),
-                        $('.card-header').css('color', "#000000")
-                    break;
-                case 'philadelphia-76ers':
-                    teamName = "Philadelphia 76ers",
-                        firstLatitude = 39.9012,
-                        firstLongitude = -75.172,
-                        $('body').css('background', '#006BB6'),
-                        $('.card-header').css('background', '#ED174C'),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'phoenix-suns':
-                    teamName = "Phoenix Suns",
-                        firstLatitude = 33.4458,
-                        firstLongitude = -112.071,
-                        $('body').css('background', '#1D1160'),
-                        $('.card-header').css('background', '#E56020'),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'portland-trail-blazers':
-                    teamName = "Portland Trail Blazers",
-                        firstLatitude = 45.5322,
-                        firstLongitude = -122.668,
-                        $('body').css('background', '#E03A3E'),
-                        $('.card-header').css('background', '#000000'),
-                        $('.card-header').css('color', '#ffffff')
-                    break;
-                case 'sacramento-kings':
-                    teamName = "Sacramento Kings",
-                        firstLatitude = 38.5161,
-                        firstLongitude = -121.417,
-                        $('body').css('background', '#5A2D81'),
-                        $('.card-header').css('background', '#63727A'),
-                        $('.card-header').css('color', "#fff")
-                    break;
-                case 'san-antonio-spurs':
-                    teamName = "San Antonio Spurs",
-                        firstLatitude = 29.4271,
-                        firstLongitude = -98.4374,
-                        $('body').css('background', '#000000'),
-                        $('.card-header').css('background', '#C4CED4'),
+                case 'los-angeles-kings':
+                    teamName = "Los Angeles Kings",
+                        firstLatitude = 34.0431,
+                        firstLongitude = -118.267,
+                        $('body').css('background', '#111111'),
+                        $('.card-header').css('background', '#A2AAAD'),
                         $('.card-header').css('color', '#000000')
                     break;
-                case 'toronto-raptors':
-                    teamName = "Toronto Raptors",
+                case 'minnesota-wild':
+                    teamName = "Minnesota Wild",
+                        firstLatitude = 44.9448,
+                        firstLongitude = -93.1011,
+                        $('body').css('background', '#154734'),
+                        $('.card-header').css('background', '#A6192E'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                case 'montreal-canadiens':
+                    teamName = "Montreal Canadiens",
+                        firstLatitude = 45.496,
+                        firstLongitude = -73.5695,
+                        $('body').css('background', '#AF1E2D'),
+                        $('.card-header').css('background', '#192168'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                case 'nashville-predators':
+                    teamName = "Nashville Predators",
+                        firstLatitude = 36.1601,
+                        firstLongitude = -86.7791,
+                        $('body').css('background', '#041E42'),
+                        $('.card-header').css('background', '#FFB81C'),
+                        $('.card-header').css('color', '#000000')
+                    break;
+                case 'new-jersey-devils':
+                    teamName = "New Jersey Devils",
+                        firstLatitude = 40.7333,
+                        firstLongitude = -74.1713,
+                        $('body').css('background', '#CE1126'),
+                        $('.card-header').css('background', '#000'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                case 'new-york-islanders':
+                    teamName = "New York Islanders",
+                        firstLatitude = 40.7464,
+                        firstLongitude = -73.5956,
+                        $('body').css('background', '#00539B'),
+                        $('.card-header').css('background', '#F47D30'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                case 'new-york-rangers':
+                    teamName = "New York Rangers",
+                        firstLatitude = 40.7509,
+                        firstLongitude = -73.9943,
+                        $('body').css('background', '#0038A8'),
+                        $('.card-header').css('background', '#CE1126'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+
+                case 'ottawa-senators':
+                    teamName = "Ottawa Senators",
+                        firstLatitude = 45.2973,
+                        firstLongitude = -75.9258,
+                        $('body').css('background', '#E31837'),
+                        $('.card-header').css('background', '#000'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                //colors above should be accurate
+                //coords correct below
+                case 'philadelphia-flyers':
+                    teamName = "Philadelphia Flyers",
+                        firstLatitude = 39.9012,
+                        firstLongitude = -75.172,
+                        $('body').css('background', '#F74902'),
+                        $('.card-header').css('background', '#000'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+
+                case 'pittsburgh-penguins':
+                    teamName = "Pittsburgh Penguins",
+                        firstLatitude = 40.4392,
+                        firstLongitude = -79.9897,
+                        $('body').css('background', '#000'),
+                        $('.card-header').css('background', '#FCB514'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+
+                case 'san-jose-sharks':
+                    teamName = "San Jose Sharks",
+                        firstLatitude = 37.3322,
+                        firstLongitude = -121.902,
+                        $('body').css('background', '#006D75'),
+                        $('.card-header').css('background', '#ea7200'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                case 'st-louis-blues':
+                    teamName = "St. Louis Blues",
+                        firstLatitude = 38.6268,
+                        firstLongitude = -90.2026,
+                        $('body').css('background', '#002F87'),
+                        $('.card-header').css('background', '#FCB514'),
+                        $('.card-header').css('color', '#000')
+                    break;
+                case 'tampa-bay-lightning':
+                    teamName = "Tampa Bay Lightning",
+                        firstLatitude = 27.94,
+                        firstLongitude = -82.45,
+                        $('body').css('background', '#002868'),
+                        $('.card-header').css('background', '#000'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+
+                case 'toronto-maple-leafs':
+                    teamName = "Toronto Maple Leafs",
                         firstLatitude = 43.64,
                         firstLongitude = -79.38,
-                        $('body').css('background', '#CE1141'),
+                        $('body').css('background', '#003E7E'),
+                        $('.card-header').css('background', '#fff'),
+                        $('.card-header').css('color', '#000000')
+                    break;
+                case 'vancouver-canucks':
+                    teamName = "Vancouver Canucks",
+                        firstLatitude = 49.2782,
+                        firstLongitude = -123.108,
+                        $('body').css('background', '#001F5B'),
                         $('.card-header').css('background', '#000000'),
                         $('.card-header').css('color', "#fff")
                     break;
-                case 'utah-jazz':
-                    teamName = "Utah Jazz",
-                        firstLatitude = 40.7693,
-                        firstLongitude = -111.9,
-                        $('body').css('background', '#002B5C'),
+                case 'vegas-golden-knights':
+                    teamName = "Vegas Golden Knights",
+                        firstLatitude = 36.1024,
+                        firstLongitude = -115.178,
+                        $('body').css('background', '#B4975A'),
                         $('.card-header').css('background', '#F9A01B'),
                         $('.card-header').css('color', '#000000')
                     break;
-                case 'washington-wizards':
-                    teamName = "Washington Wizards",
+                case 'washington-capitals':
+                    teamName = "Washington Capitals",
                         firstLatitude = 38.8981,
                         firstLongitude = -77.0209,
-                        $('body').css('background', '#002B5C'),
-                        $('.card-header').css('background', '#E31837'),
+                        $('body').css('background', '#041E42'),
+                        $('.card-header').css('background', '#C8102E'),
+                        $('.card-header').css('color', "#fff")
+                    break;
+                case 'winnipeg-jets':
+                    teamName = "Winnipeg Jets",
+                        firstLatitude = 49.8936,
+                        firstLongitude = -97.1435,
+                        $('body').css('background', '#041E42'),
+                        $('.card-header').css('background', '#AC162C'),
                         $('.card-header').css('color', "#fff")
                     break;
                 default:
@@ -546,6 +569,30 @@
                     console.log(dist);
 
                     let dateTime = moment(games[i].datetime_local).format("dddd, LL");
+                    
+                    //Calculating hours driving
+                    let driveTime = dist / 60;
+                    let driveMinutes = driveTime.toString();
+                    let drivingMinutes;
+                    if (driveMinutes.length <2) {
+                        drivingMinutes = '0.00'
+                    }
+                    else {
+                        drivingMinutes = driveMinutes.toString();
+                    }
+                    let splitMinutes = drivingMinutes.split('.');
+                    let theHours = splitMinutes[0]
+                    let theMinutes = splitMinutes[1];
+                    if(theMinutes.length > 2) theMinutes = theMinutes.substring(0,2);
+
+                    function calculateDrive(a) {
+                        return a / 60
+                    };
+                    function calculateMinutes(b) {
+                        return (b/100)*60
+                    };
+                    
+                    let userDrive = theHours+'h '+calculateMinutes(theMinutes).toFixed(0)+'m';
 
                     newArray.push({
                         game: games[i].title,
@@ -554,6 +601,7 @@
                         average: games[i].stats.average_price.toFixed(2),
                         starting: games[i].stats.lowest_price.toFixed(2),
                         date: moment(games[i].datetime_local).format("dddd, LL"),
+                        driveTime: userDrive,
                         location: games[i].venue.display_location,
                         venue: games[i].venue.name,
                         id: [i]
@@ -576,10 +624,11 @@
                                 <td>$${p.starting}</td>
                                 <td>$${p.average}</td>
                                 <td>${p.distance} miles</td>
+                                <td>${p.driveTime}</td>
                                 <td><button class="seatgeek" id = "${p.id}"><a href="${p.url}" target="_blank">Visit SeatGeek</a></button></td>
                                 </tr>`;
                     });
-                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Find Tickets</th></tr>';
+                    let tableHead = '<tr><th>Game</th><th>Date</th><th>Location</th><th>Venue</th><th>Starting Ticket Price</th><th>Average Ticket Price</th><th>Distance</th><th>Drive Time</th><th>Find Tickets</th></tr>';
                     let createTable = '<table> ' + tableHead + rowItems.join('') + ' </table>';
                     $(".table").html(createTable);
                     $('.seatgeek').on('click', function () {
@@ -609,10 +658,12 @@
         })//Submit function
 
         $(".reset").on('click', function () {
-            $('body').css('background', '#17408b'),
-                $('.card-header').css('background', '#c9082a')
+            $('body').css('background', '#000'),
+                $('.card-header').css('background', '#B8C4CA')
+                $('.card-header').css('color', '#000')
             $(".table").html("")
-            $('.teamName').html("")
+            $('.teamName').html("");
+            initialize()
         })
 
     </script>
